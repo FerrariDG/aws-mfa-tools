@@ -6,7 +6,7 @@ from setuptools import (
 
 setup(
     name="aws-mfa-tools",
-    version="0.0.1",
+    version="0.1.0",
     packages=find_packages(),
     author="Daniel Ferrari",
     description="AWS MFA tools to be used on command line.",
@@ -14,14 +14,20 @@ setup(
     keywords="aws cli mfa login",
     url="https://github.com/FerrariDG/aws-mfa-tools",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "License :: Freely Distributable",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
-        "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.7"
+        "Operating System :: MacOS",
+        "Operating System :: Microsoft",
+        "Operating System :: POSIX",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Topic :: Security",
+        "Topic :: Software Development :: Tools"
     ],
     long_description=open("README.md", "r").read(),
     long_description_content_type="text/markdown",

@@ -1,5 +1,9 @@
 # AWS MFA Tools
 
+![MIT License](https://img.shields.io/pypi/l/aws-mfa-tools)
+![Package Version](https://img.shields.io/pypi/v/aws-mfa-tools)
+![Python Version](https://img.shields.io/pypi/pyversions/aws-mfa-tools)
+
 - [Usage](#usage)
 - [AWS Files](#aws-files)
 - [Requirements](#requirements)
