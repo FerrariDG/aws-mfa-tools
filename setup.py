@@ -27,7 +27,7 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Topic :: Security",
-        "Topic :: Software Development :: Tools"
+        "Topic :: Software Development :: Build Tools"
     ],
     long_description=open("README.md", "r").read(),
     long_description_content_type="text/markdown",
