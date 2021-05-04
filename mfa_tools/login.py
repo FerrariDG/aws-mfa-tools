@@ -19,7 +19,7 @@ import os
 import subprocess
 
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 def get_aws_credentials(
@@ -131,7 +131,7 @@ def parse_args() -> argparse.Namespace:
     aws_file = join(expanduser("~"), ".aws", "credentials")
 
     parser = argparse.ArgumentParser(
-        prog="aws-mfa-login",
+        prog="awslogin",
         description="AWS MFA Tool",
         usage="%(prog)s [options]",
         epilog="Helping manage AWS Session tokens for MFA authentication.",

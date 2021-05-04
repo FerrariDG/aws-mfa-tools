@@ -24,7 +24,7 @@ The tool will generate temporary credential accesses and manage them on the AWS 
 ## Usage
 
 ```text
-usage: aws-mfa-login [options]
+usage: awslogin [options]
 
 AWS MFA Tool
 
@@ -51,7 +51,7 @@ The tool will create and maintain the `credentials` file with temporary access g
 
 To use this tool, you will need to create a `config` file with your `mfa_serial` identification and a `mfa_credentials` file with your access keys to the AWS account where `mfa_serial` is configured.
 
-The default path to all three files can be check using `aws-mfa-login -h`. If needed, it is possible to specify the path for each file, check the optional arguments.
+The default path to all three files can be check using `awslogin -h`. If needed, it is possible to specify the path for each file, check the optional arguments.
 
 Example for a `config` file with profiles:
 

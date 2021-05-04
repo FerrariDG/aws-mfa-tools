@@ -1,4 +1,4 @@
-PACKAGE=aws-mfa-tools
+PACKAGE=mfa_tools
 
 all: static-tests
 
