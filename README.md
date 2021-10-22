@@ -94,16 +94,19 @@ The `credentials` file will be maintained by the tool and will have something si
 aws_access_key_id = ********
 aws_secret_access_key = *******
 aws_session_token = *******
+aws_session_token_expiration = <datetime>
 
 [company]
 aws_access_key_id = ********
 aws_secret_access_key = *******
 aws_session_token = *******
+aws_session_token_expiration = <datetime>
 
 [datalake]
 aws_access_key_id = *******
 aws_secret_access_key = *******
 aws_session_token = *******
+aws_session_token_expiration = <datetime>
 ```
 
 ---
