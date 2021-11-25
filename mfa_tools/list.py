@@ -2,9 +2,24 @@
 from configparser import ConfigParser
 from datetime import datetime
 
+from typing import Tuple
 
-def get_token_expiration(parser, profile):
 
+def get_token_expiration(parser: ConfigParser, profile: str) -> Tuple[str, str]:
+    """Return token expiration date and whether it is expired.
+
+    Parameters
+    ----------
+    parser : ConfigParser
+        Parser with all configuration files.
+    profile : str
+        Profile name.
+
+    Returns
+    -------
+    Tuple[str, str]
+        Tuple with expiration date and whether it is expired.
+    """
     expiration = parser.get(profile, 'aws_session_token_expiration', fallback=None)
 
     if expiration is None:
@@ -17,13 +32,38 @@ def get_token_expiration(parser, profile):
     return f"{dt:%Y-%m-%d %H:%M:%S}", expired
 
 
-def has_configured(parser, profile, parameter):
+def has_configured(parser: ConfigParser, profile: str, parameter: str) -> str:
+    """Return whether a parameter is configured.
 
+    Parameters
+    ----------
+    parser : ConfigParser
+        Parser with all configuration files.
+    profile : str
+        Profile name.
+    parameter : str
+        Parameter name.
+
+    Returns
+    -------
+    str
+        Whether the parameter is configured.
+    """
     return "N" if parser.get(profile, parameter, fallback=None) is None else "Y"
 
 
-def print_profiles(config_file, mfa_file, credentials_file):
+def print_profiles(config_file: str, mfa_file: str, credentials_file: str) -> None:
+    """Print all profiles and data related.
 
+    Parameters
+    ----------
+    config_file : str
+        AWS configuration file.
+    mfa_file : str
+        MFA credentials file.
+    credentials_file : str
+        AWS credentials file.
+    """
     config = ConfigParser()
     config.read(config_file)
 
@@ -36,7 +76,10 @@ def print_profiles(config_file, mfa_file, credentials_file):
     profiles = sorted(set(config.sections() + mfa.sections() + credentials.sections()))
 
     print("")
-    print(f"|{'Profile name':^22}|{'Region':^11}|{'MFA':^5}|{'AccessKey':^11}|{'Token':^7}|{'Expiration':^21}|{'Expired':^9}|")
+    print(
+        f"|{'Profile name':^22}|{'Region':^11}|{'MFA':^5}|{'AccessKey':^11}" +
+        f"|{'Token':^7}|{'Expiration':^21}|{'Expired':^9}|"
+    )
     print(f"|{'-' * 22}|{'-' * 11}|{'-' * 5}|{'-' * 11}|{'-' * 7}|{'-' * 21}|{'-' * 9}|")
 
     for profile in profiles:
