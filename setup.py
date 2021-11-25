@@ -6,7 +6,7 @@ from setuptools import (
 
 setup(
     name="aws-mfa-tools",
-    version="0.1.1",
+    version="0.2.0",
     packages=find_packages(),
     author="Daniel Ferrari",
     description="AWS MFA tools to be used on command line.",
@@ -33,7 +33,7 @@ setup(
     long_description_content_type="text/markdown",
     entry_points={
         "console_scripts": [
-            "awslogin=mfa_tools.login:main"
+            "awslogin=mfa_tools.main:main"
         ]
     },
     python_requires=">=3.7"
