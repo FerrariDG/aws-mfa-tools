@@ -48,11 +48,13 @@ def get_aws_credentials(
     """
     config = ConfigParser()
     config.read(aws_config_file)
+
     try:
         profile = config[aws_profile]
     except KeyError:
         print(f"AWS profile {aws_profile} not found at {aws_config_file}.", file=stderr)
         exit(-1)
+
     try:
         mfa_serial = profile["mfa_serial"]
     except KeyError:
@@ -61,10 +63,11 @@ def get_aws_credentials(
 
     mfa_token = input(f"MFA token for profile {aws_profile}: ") if aws_mfa_token is None else aws_mfa_token
 
-    # Delete any AWS Session Token in place
+    # Delete any AWS environment variable in place
     env_vars = os.environ.copy()
-    if "AWS_SESSION_TOKEN" in env_vars:
-        del env_vars["AWS_SESSION_TOKEN"]
+    for key in env_vars.keys():
+        if key.startswith("AWS_"):
+            del env_vars[key]
 
     # AWS credentials file with access keys for the profile MFA
     env_vars["AWS_SHARED_CREDENTIALS_FILE"] = mfa_credentials_file
@@ -105,12 +108,7 @@ def export_credentials(aws_profile: str, aws_credentials: Dict[str, str], creden
     """
     aws_file = ConfigParser()
     aws_file.read(credentials_file)
-
-    aws_file[aws_profile] = {
-        "AWS_ACCESS_KEY_ID": aws_credentials["AccessKeyId"],
-        "AWS_SECRET_ACCESS_KEY": aws_credentials["SecretAccessKey"],
-        "AWS_SESSION_TOKEN": aws_credentials["SessionToken"]
-    }
+    aws_file[aws_profile] = aws_credentials
 
     with open(credentials_file, "w") as f:
         aws_file.write(f)
@@ -190,12 +188,18 @@ def main():
 
     credentials = get_aws_credentials(args.profile, args.config, args.mfa, args.token)
 
+    aws_credentials = {
+        "AWS_ACCESS_KEY_ID": credentials["AccessKeyId"],
+        "AWS_SECRET_ACCESS_KEY": credentials["SecretAccessKey"],
+        "AWS_SESSION_TOKEN": credentials["SessionToken"],
+        "AWS_SESSION_TOKEN_EXPIRATION": credentials["Expiration"]
+    }
+
     if args.export:
-        print(f"export AWS_ACCESS_KEY_ID={credentials['AccessKeyId']}")
-        print(f"export AWS_SECRET_ACCESS_KEY={credentials['SecretAccessKey']}")
-        print(f"export AWS_SESSION_TOKEN={credentials['SessionToken']}")
+        for key, value in aws_credentials.items():
+            print(f"export {key}={value}")
     else:
-        export_credentials(args.profile, credentials, args.aws)
+        export_credentials(args.profile, aws_credentials, args.aws)
 
 
 if __name__ == "__main__":
