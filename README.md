@@ -37,6 +37,7 @@ optional arguments:
   --mfa MFA_FILE        path to mfa credentials file. (default: <path to>/.aws/mfa_credentials)
   --aws AWS_FILE        path to aws credentials file. (default: <path to>/.aws/credentials)
   --export              show export command, does NOT update credentials file.(default: False)
+  --list                list all profiles on AWS folder. (default: False)
 
 Helping manage AWS Session tokens for MFA authentication.
 ```

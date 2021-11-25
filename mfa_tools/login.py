@@ -4,22 +4,15 @@ from typing import (
     Dict,
     Optional
 )
-from os.path import (
-    expanduser,
-    join
-)
+
 from sys import (
     exit,
     stderr
 )
 
-import argparse
 import json
 import os
 import subprocess
-
-
-__version__ = "0.1.1"
 
 
 def get_aws_credentials(
@@ -94,8 +87,8 @@ def get_aws_credentials(
     return credentials
 
 
-def export_credentials(aws_profile: str, aws_credentials: Dict[str, str], credentials_file: str) -> None:
-    """Export the session credentials to the AWS credential file.
+def save_credentials(aws_profile: str, aws_credentials: Dict[str, str], credentials_file: str) -> None:
+    """Save the session credentials into the AWS credential file.
 
     Parameters
     ----------
@@ -114,93 +107,3 @@ def export_credentials(aws_profile: str, aws_credentials: Dict[str, str], creden
         aws_file.write(f)
 
     print(f"AWS credentials file {credentials_file} for profile {aws_profile} updated.")
-
-
-def parse_args() -> argparse.Namespace:
-    """Create argument parser.
-
-    Returns
-    -------
-    argparse.Namespace
-        object with arguments and values.
-    """
-    config_file = join(expanduser("~"), ".aws", "config")
-    mfa_file = join(expanduser("~"), ".aws", "mfa_credentials")
-    aws_file = join(expanduser("~"), ".aws", "credentials")
-
-    parser = argparse.ArgumentParser(
-        prog="awslogin",
-        description="AWS MFA Tool",
-        usage="%(prog)s [options]",
-        epilog="Helping manage AWS Session tokens for MFA authentication.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
-    )
-    parser.add_argument(
-        "--version",
-        action="version",
-        version=f"%(prog)s {__version__}"
-        )
-    parser.add_argument(
-        "--profile",
-        default="default",
-        help="aws profile to get mfa serial."
-        )
-    parser.add_argument(
-        "--token",
-        type=str,
-        default=None,
-        help="mfa token to login."
-    )
-    parser.add_argument(
-        "--config",
-        type=str,
-        metavar="CONFIG_FILE",
-        default=config_file,
-        help="path to aws config file."
-    )
-    parser.add_argument(
-        "--mfa",
-        type=str,
-        metavar="MFA_FILE",
-        default=mfa_file,
-        help="path to mfa credentials file."
-    )
-    parser.add_argument(
-        "--aws",
-        type=str,
-        metavar="AWS_FILE",
-        default=aws_file,
-        help="path to aws credentials file."
-    )
-    parser.add_argument(
-        "--export",
-        action="store_true",
-        default=False,
-        help="show export command, does NOT update credentials file."
-    )
-
-    return parser.parse_args()
-
-
-def main():
-    """Process credentials request."""
-    args = parse_args()
-
-    credentials = get_aws_credentials(args.profile, args.config, args.mfa, args.token)
-
-    aws_credentials = {
-        "AWS_ACCESS_KEY_ID": credentials["AccessKeyId"],
-        "AWS_SECRET_ACCESS_KEY": credentials["SecretAccessKey"],
-        "AWS_SESSION_TOKEN": credentials["SessionToken"],
-        "AWS_SESSION_TOKEN_EXPIRATION": credentials["Expiration"]
-    }
-
-    if args.export:
-        for key, value in aws_credentials.items():
-            print(f"export {key}={value}")
-    else:
-        export_credentials(args.profile, aws_credentials, args.aws)
-
-
-if __name__ == "__main__":
-    main()
