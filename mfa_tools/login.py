@@ -58,9 +58,9 @@ def get_aws_credentials(
 
     # Delete any AWS environment variable in place
     env_vars = os.environ.copy()
-    for key in env_vars.keys():
-        if key.startswith("AWS_"):
-            del env_vars[key]
+    aws_keys = [key for key in env_vars.keys() if key.startswith("AWS_")]
+    for key in aws_keys:
+        del env_vars[key]
 
     # AWS credentials file with access keys for the profile MFA
     env_vars["AWS_SHARED_CREDENTIALS_FILE"] = mfa_credentials_file
