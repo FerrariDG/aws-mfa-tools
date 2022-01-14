@@ -3,10 +3,15 @@ from setuptools import (
     setup
 )
 
+__version__ = "0.2.2"
+
+with open("mfa_tools/version.py", "w") as f:
+    f.write(f"VERSION = '{__version__}'")
+
 
 setup(
     name="aws-mfa-tools",
-    version="0.2.1",
+    version=__version__,
     packages=find_packages(),
     author="Daniel Ferrari",
     description="AWS MFA tools to be used on command line.",
@@ -14,7 +19,7 @@ setup(
     keywords="aws cli mfa login",
     url="https://github.com/FerrariDG/aws-mfa-tools",
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "License :: Freely Distributable",
@@ -23,11 +28,10 @@ setup(
         "Operating System :: MacOS",
         "Operating System :: Microsoft",
         "Operating System :: POSIX",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3",
         "Topic :: Security",
-        "Topic :: Software Development :: Build Tools"
+        "Topic :: Software Development :: Build Tools",
+        "Typing :: Typed"
     ],
     long_description=open("README.md", "r").read(),
     long_description_content_type="text/markdown",
