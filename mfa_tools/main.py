@@ -12,9 +12,7 @@ from mfa_tools.login import (
     get_aws_credentials,
     save_credentials
 )
-
-
-__version__ = "0.2.0"
+from mfa_tools.version import VERSION
 
 
 def parse_args() -> argparse.Namespace:
@@ -39,7 +37,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--version",
         action="version",
-        version=f"%(prog)s {__version__}"
+        version=f"%(prog)s {VERSION}"
         )
     parser.add_argument(
         "--profile",
